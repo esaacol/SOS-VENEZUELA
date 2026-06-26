@@ -1,0 +1,238 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum ReportType {
+  LANDSLIDE
+  BLOCKED_ROAD
+  NO_HELP
+  TRAPPED_PEOPLE
+  NEEDS_WATER
+  NEEDS_FOOD
+  NEEDS_MEDICINE
+  NEEDS_RESCUE
+  FLOOD
+  POWER_OUTAGE
+  COMMUNICATION_LOSS
+  OTHER
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum Severity {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum CollectionCenterType {
+  COLLECTION_CENTER
+  SHELTER
+  MEDICAL_POINT
+  FOOD_POINT
+  WATER_POINT
+  LOGISTICS_BASE
+  OTHER
+}
+
+enum CollectionCenterStatus {
+  PENDING
+  VERIFIED
+  ACTIVE
+  FULL
+  INACTIVE
+  REJECTED
+}
+
+enum ResourceType {
+  TRUCK
+  PICKUP
+  MOTORCYCLE
+  BOAT
+  AMBULANCE
+  BUS
+  HEAVY_MACHINE
+  BACKHOE
+  TRACTOR
+  CHAINSAW
+  GENERATOR
+  MEDICAL_TEAM
+  VOLUNTEERS
+  FOOD
+  WATER
+  MEDICINE
+  FUEL
+  TOOLS
+  OTHER
+}
+
+enum ResourceStatus {
+  PENDING
+  VERIFIED
+  AVAILABLE
+  ASSIGNED
+  UNAVAILABLE
+  REJECTED
+}
+
+enum AidRequestType {
+  WATER
+  FOOD
+  MEDICINE
+  TRANSPORT
+  MACHINERY
+  SHELTER
+  RESCUE
+  FUEL
+  OTHER
+}
+
+enum AidRequestStatus {
+  PENDING
+  VERIFIED
+  IN_PROGRESS
+  PARTIALLY_RESOLVED
+  RESOLVED
+  REJECTED
+}
+
+enum AidMatchStatus {
+  SUGGESTED
+  CONTACTED
+  ASSIGNED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+model Report {
+  id                 String             @id @default(cuid())
+  type               ReportType
+  verificationStatus VerificationStatus @default(PENDING)
+  severity           Severity           @default(MEDIUM)
+  state              String
+  municipality       String
+  parish             String?
+  sector             String
+  latitude           Float?
+  longitude          Float?
+  description        String
+  reporterName       String?
+  reporterPhone      String?
+  peopleAffected     Int?
+  verified           Boolean            @default(false)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  matches            AidMatch[]
+}
+
+model CollectionCenter {
+  id              String                 @id @default(cuid())
+  name            String
+  type            CollectionCenterType
+  status          CollectionCenterStatus @default(PENDING)
+  state           String
+  municipality    String
+  parish          String?
+  sector          String
+  latitude        Float?
+  longitude       Float?
+  description     String
+  managerName     String?
+  managerPhone    String?
+  publicContact   Boolean                @default(false)
+  schedule        String?
+  acceptsWater    Boolean                @default(false)
+  acceptsFood     Boolean                @default(false)
+  acceptsMedicine Boolean                @default(false)
+  acceptsClothes  Boolean                @default(false)
+  acceptsTools    Boolean                @default(false)
+  acceptsFuel     Boolean                @default(false)
+  acceptsOther    Boolean                @default(false)
+  otherDetails    String?
+  capacityNote    String?
+  verified        Boolean                @default(false)
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+}
+
+model ResourceOffer {
+  id                  String         @id @default(cuid())
+  resourceType        ResourceType
+  status              ResourceStatus @default(PENDING)
+  ownerName           String?
+  ownerPhone          String?
+  organizationName    String?
+  state               String
+  municipality        String
+  parish              String?
+  sector              String
+  latitude            Float?
+  longitude           Float?
+  description         String
+  availableFrom       DateTime?
+  availableUntil      DateTime?
+  capacity            String?
+  canMoveToOtherZones Boolean        @default(false)
+  needsFuel           Boolean        @default(false)
+  needsDriver         Boolean        @default(false)
+  verified            Boolean        @default(false)
+  createdAt           DateTime       @default(now())
+  updatedAt           DateTime       @updatedAt
+  matches             AidMatch[]
+}
+
+model AidRequest {
+  id             String           @id @default(cuid())
+  requestType    AidRequestType
+  status         AidRequestStatus @default(PENDING)
+  urgency        Severity         @default(MEDIUM)
+  requesterName  String?
+  requesterPhone String?
+  communityName  String
+  state          String
+  municipality   String
+  parish         String?
+  sector         String
+  latitude       Float?
+  longitude      Float?
+  description    String
+  peopleCount    Int?
+  needsWater     Boolean          @default(false)
+  needsFood      Boolean          @default(false)
+  needsMedicine  Boolean          @default(false)
+  needsTransport Boolean          @default(false)
+  needsMachinery Boolean          @default(false)
+  needsShelter   Boolean          @default(false)
+  needsFuel      Boolean          @default(false)
+  verified       Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  matches        AidMatch[]
+}
+
+model AidMatch {
+  id              String         @id @default(cuid())
+  aidRequestId    String
+  resourceOfferId String
+  reportId        String?
+  status          AidMatchStatus @default(SUGGESTED)
+  notes           String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  aidRequest      AidRequest     @relation(fields: [aidRequestId], references: [id], onDelete: Cascade)
+  resourceOffer   ResourceOffer  @relation(fields: [resourceOfferId], references: [id], onDelete: Cascade)
+  report          Report?        @relation(fields: [reportId], references: [id], onDelete: SetNull)
+
+  @@unique([aidRequestId, resourceOfferId])
+}
