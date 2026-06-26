@@ -1,18 +1,23 @@
 import type { Metadata } from "next";
+import "mapbox-gl/dist/mapbox-gl.css";
 import "./globals.css";
 import { SiteNav } from "@/components/layout/site-nav";
 
 export const metadata: Metadata = {
   title: "SOS Venezuela",
-  description: "Coordinacion de ayuda humanitaria, reportes y recursos disponibles."
+  description: "Coordinación de ayuda humanitaria, reportes y recursos disponibles.",
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="es">
       <body>
         <SiteNav />
-        <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(255,106,0,0.16),transparent_34%),#070707] px-4 py-6 sm:px-6 lg:px-8">
+        <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,0.14),transparent_35%),#050505] text-white">
           {children}
         </main>
       </body>
