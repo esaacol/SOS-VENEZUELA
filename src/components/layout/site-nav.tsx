@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { AlertTriangle, Download, HandHeart } from "lucide-react";
+import { HideInApp } from "@/components/mobile/hide-in-app";
 
 const links = [
   ["Inicio / Mapa", "/"],
@@ -22,13 +23,15 @@ export function SiteNav() {
             <p className="truncate text-base font-black leading-none sm:text-lg">SOS Venezuela</p>
             <p className="truncate text-xs text-zinc-400">Coordinacion humanitaria verificada</p>
           </div>
-          <Link
-            href="/descargar"
-            className="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-rescue-500/35 bg-rescue-500/10 text-rescue-500 sm:hidden"
-            aria-label="Descargar APK"
-          >
-            <Download className="h-5 w-5" />
-          </Link>
+          <HideInApp>
+            <Link
+              href="/descargar"
+              className="ml-auto inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-rescue-500/35 bg-rescue-500/10 text-rescue-500 sm:hidden"
+              aria-label="Descargar APK"
+            >
+              <Download className="h-5 w-5" />
+            </Link>
+          </HideInApp>
           <AlertTriangle className="hidden h-5 w-5 shrink-0 text-rescue-500 sm:block" />
         </div>
 
@@ -42,13 +45,15 @@ export function SiteNav() {
               {label}
             </Link>
           ))}
-          <Link
-            href="/descargar"
-            className="hidden shrink-0 items-center gap-2 rounded-full border border-rescue-500/40 bg-rescue-500/10 px-3 py-2 text-sm font-bold text-rescue-500 hover:bg-rescue-500 hover:text-black sm:inline-flex"
-          >
-            <Download className="h-4 w-4" />
-            Descargar APK
-          </Link>
+          <HideInApp>
+            <Link
+              href="/descargar"
+              className="hidden shrink-0 items-center gap-2 rounded-full border border-rescue-500/40 bg-rescue-500/10 px-3 py-2 text-sm font-bold text-rescue-500 hover:bg-rescue-500 hover:text-black sm:inline-flex"
+            >
+              <Download className="h-4 w-4" />
+              Descargar APK
+            </Link>
+          </HideInApp>
         </nav>
       </div>
     </header>
