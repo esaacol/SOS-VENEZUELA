@@ -1,15 +1,17 @@
 import { Field, Input, Select, Textarea } from "@/components/ui/input";
+import { LocationPicker } from "@/components/map/location-picker";
 import { aidRequestTypeLabels, centerTypeLabels, reportTypeLabels, resourceTypeLabels, severityLabels } from "@/lib/labels";
 
 export function LocationFields() {
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <Field label="Estado"><Input name="state" required placeholder="Merida" /></Field>
-      <Field label="Municipio"><Input name="municipality" required placeholder="Campo Elias" /></Field>
-      <Field label="Parroquia"><Input name="parish" placeholder="Opcional" /></Field>
-      <Field label="Sector"><Input name="sector" required placeholder="Sector o comunidad" /></Field>
-      <Field label="Latitud"><Input name="latitude" type="number" step="0.0000001" placeholder="8.5952" /></Field>
-      <Field label="Longitud"><Input name="longitude" type="number" step="0.0000001" placeholder="-71.1434" /></Field>
+    <div className="grid gap-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Estado"><Input name="state" required placeholder="Merida" /></Field>
+        <Field label="Municipio"><Input name="municipality" required placeholder="Campo Elias" /></Field>
+        <Field label="Parroquia"><Input name="parish" placeholder="Opcional" /></Field>
+        <Field label="Sector"><Input name="sector" required placeholder="Sector o comunidad" /></Field>
+      </div>
+      <LocationPicker />
     </div>
   );
 }

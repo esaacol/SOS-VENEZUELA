@@ -9,13 +9,21 @@
     "lint": "eslint .",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "tsx prisma/seed.ts"
+    "prisma:seed": "tsx prisma/seed.ts",
+    "cap:add:android": "cap add android",
+    "cap:sync": "cap sync android",
+    "android:debug": "cd android && gradlew.bat :app:assembleDebug",
+    "android:release": "cd android && gradlew.bat :app:assembleRelease"
   },
   "dependencies": {
+    "@capacitor/android": "^5.7.8",
+    "@capacitor/cli": "^5.7.8",
+    "@capacitor/core": "^5.7.8",
     "@prisma/client": "^6.9.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "lucide-react": "^0.468.0",
+    "mapbox-gl": "^3.25.0",
     "next": "^15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
