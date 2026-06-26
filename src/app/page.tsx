@@ -94,14 +94,14 @@ export default async function HomePage() {
         <div className="grid gap-3 sm:flex sm:flex-wrap">
           <LinkButton href="/reportar">Reportar emergencia</LinkButton>
           <LinkButton href="/recursos" variant="secondary">Tengo recursos para ayudar</LinkButton>
-          <a
-            href="/downloads/sos-venezuela.apk"
-            download
+          <LinkButton
+            href="/descargar"
+            variant="secondary"
             className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-rescue-500/45 bg-rescue-500/10 px-4 py-2 text-sm font-black text-rescue-500 transition hover:bg-rescue-500 hover:text-black"
           >
             <Download className="h-4 w-4" />
             Descargar app Android
-          </a>
+          </LinkButton>
         </div>
       </section>
 
