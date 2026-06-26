@@ -15,3 +15,5 @@ Thumbs.db
 .env
 .env.local
 .env.production
+build-output.txt
+*.jks

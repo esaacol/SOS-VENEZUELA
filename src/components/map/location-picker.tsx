@@ -74,7 +74,7 @@ export function LocationPicker({ initialLatitude, initialLongitude, onChange }: 
       map.current?.remove();
       map.current = null;
     };
-  }, []);
+  }, [initialCenter.latitude, initialCenter.longitude, onChange]);
 
   useEffect(() => {
     if (!map.current || !marker.current) return;
