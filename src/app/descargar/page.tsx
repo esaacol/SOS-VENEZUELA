@@ -2,7 +2,7 @@ import { CheckCircle2, Download, ShieldCheck, Smartphone } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const apkUrl = "/downloads/sos-venezuela.apk";
-const apkSha256 = "2A19AFDB669ACC4C1496C5C4464F8E78491254F4375C473970132623301ADBA9";
+const apkSha256 = "8E116445778E22352B9969237155F26EEF74D7AB6D25DB4B054017343F5D9D80";
 
 export default function DownloadPage() {
   return (
